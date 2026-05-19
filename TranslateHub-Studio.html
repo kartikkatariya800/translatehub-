@@ -1,0 +1,1258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TranslateHub Studio</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0a0b0f;
+  --sidebar:#0e1015;
+  --panel:#13151c;
+  --card:#1a1d26;
+  --card2:#1e2130;
+  --border:#252836;
+  --border2:#2e3348;
+  --accent:#6366f1;
+  --accent-h:#818cf8;
+  --green:#22c55e;
+  --orange:#f97316;
+  --red:#ef4444;
+  --yellow:#eab308;
+  --text:#f1f3f9;
+  --text2:#9ca3af;
+  --text3:#6b7280;
+  --radius:12px;
+  --glow:0 0 40px rgba(99,102,241,0.12);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:var(--text);height:100vh;display:flex;flex-direction:column;overflow:hidden;font-size:14px}
+
+/* ─── TOP NAV ─── */
+.topnav{
+  height:52px;min-height:52px;
+  background:var(--sidebar);
+  border-bottom:1px solid var(--border);
+  display:flex;align-items:center;padding:0 16px;gap:12px;
+  position:relative;z-index:50;
+}
+.logo-wrap{display:flex;align-items:center;gap:8px;margin-right:16px}
+.logo-box{
+  width:30px;height:30px;border-radius:8px;
+  background:linear-gradient(135deg,#6366f1,#8b5cf6);
+  display:flex;align-items:center;justify-content:center;font-size:14px;
+}
+.logo-text{font-weight:800;font-size:1rem;letter-spacing:-0.5px}
+.logo-text span{color:var(--accent-h)}
+.nav-tabs{display:flex;gap:2px;flex:1}
+.nav-tab{
+  padding:6px 14px;border-radius:8px;border:none;background:none;
+  color:var(--text2);font-family:'Plus Jakarta Sans',sans-serif;font-size:0.82rem;font-weight:500;
+  cursor:pointer;transition:all .15s;display:flex;align-items:center;gap:6px;
+}
+.nav-tab:hover{background:var(--card);color:var(--text)}
+.nav-tab.active{background:var(--card);color:var(--text)}
+.nav-tab .dot{width:6px;height:6px;border-radius:50%;background:var(--accent)}
+.topnav-right{display:flex;align-items:center;gap:8px;margin-left:auto}
+.btn-sm{
+  padding:6px 14px;border-radius:8px;border:none;
+  font-family:'Plus Jakarta Sans',sans-serif;font-size:0.78rem;font-weight:600;cursor:pointer;transition:all .15s;
+}
+.btn-primary{background:var(--accent);color:#fff}
+.btn-primary:hover{background:var(--accent-h)}
+.btn-ghost{background:none;border:1px solid var(--border2);color:var(--text2)}
+.btn-ghost:hover{border-color:var(--accent);color:var(--accent)}
+.avatar{width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,#6366f1,#ec4899);display:flex;align-items:center;justify-content:center;font-size:0.7rem;font-weight:700;cursor:pointer}
+
+/* ─── MAIN LAYOUT ─── */
+.main{display:flex;flex:1;overflow:hidden}
+
+/* ─── LEFT SIDEBAR ─── */
+.sidebar{
+  width:220px;min-width:220px;
+  background:var(--sidebar);border-right:1px solid var(--border);
+  display:flex;flex-direction:column;padding:12px 8px;overflow-y:auto;
+}
+.sidebar-section{margin-bottom:20px}
+.sidebar-label{font-size:0.68rem;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:1px;padding:0 8px;margin-bottom:6px}
+.side-btn{
+  display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:9px;
+  cursor:pointer;transition:all .15s;color:var(--text2);font-size:0.83rem;font-weight:500;
+  border:none;background:none;width:100%;text-align:left;
+}
+.side-btn:hover{background:var(--card);color:var(--text)}
+.side-btn.active{background:rgba(99,102,241,0.12);color:var(--accent-h)}
+.side-btn .icon{font-size:1rem;width:20px;text-align:center}
+.side-btn .badge{margin-left:auto;background:var(--accent);color:#fff;font-size:0.6rem;padding:1px 6px;border-radius:100px;font-weight:700}
+
+/* ─── CENTER WORKSPACE ─── */
+.workspace{flex:1;display:flex;flex-direction:column;overflow:hidden;background:var(--bg)}
+
+/* ─── TOOLBAR ─── */
+.toolbar{
+  padding:10px 16px;border-bottom:1px solid var(--border);
+  display:flex;align-items:center;gap:8px;background:var(--panel);
+  flex-wrap:wrap;
+}
+.toolbar-group{display:flex;align-items:center;gap:6px}
+.toolbar-divider{width:1px;height:24px;background:var(--border);margin:0 4px}
+.tb-btn{
+  display:flex;align-items:center;gap:6px;padding:6px 12px;
+  border-radius:8px;border:1px solid var(--border);background:var(--card);
+  color:var(--text2);font-family:'Plus Jakarta Sans',sans-serif;
+  font-size:0.78rem;font-weight:600;cursor:pointer;transition:all .15s;white-space:nowrap;
+}
+.tb-btn:hover{border-color:var(--accent);color:var(--accent)}
+.tb-btn.active,.tb-btn.green{background:rgba(34,197,94,0.1);border-color:rgba(34,197,94,0.3);color:var(--green)}
+.select-sm{
+  padding:6px 10px;border-radius:8px;border:1px solid var(--border);background:var(--card);
+  color:var(--text);font-family:'Plus Jakarta Sans',sans-serif;font-size:0.78rem;
+  outline:none;cursor:pointer;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%236b7280' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;background-position:right 8px center;padding-right:24px;
+  appearance:none;
+}
+.select-sm option{background:#1a1d26}
+.lang-arrow{display:flex;align-items:center;gap:6px;font-size:1rem;color:var(--text3)}
+
+/* ─── VIDEO AREA ─── */
+.video-workspace{display:flex;flex:1;overflow:hidden;gap:0}
+.video-col{flex:1;display:flex;flex-direction:column;overflow:hidden}
+.video-col+.video-col{border-left:1px solid var(--border)}
+.video-col-header{
+  padding:10px 16px;background:var(--panel);border-bottom:1px solid var(--border);
+  display:flex;align-items:center;justify-content:space-between;
+}
+.col-title{font-size:0.78rem;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:0.5px;display:flex;align-items:center;gap:6px}
+.col-badge{padding:2px 8px;border-radius:6px;font-size:0.65rem;font-weight:700;letter-spacing:0.5px}
+.badge-orig{background:rgba(107,114,128,0.15);color:var(--text3)}
+.badge-trans{background:rgba(99,102,241,0.15);color:var(--accent-h)}
+.badge-live{background:rgba(34,197,94,0.15);color:var(--green);animation:livePulse 2s infinite}
+@keyframes livePulse{0%,100%{opacity:1}50%{opacity:0.6}}
+
+/* ─── VIDEO PLAYER ─── */
+.video-container{
+  flex:1;background:#000;position:relative;display:flex;align-items:center;justify-content:center;
+  overflow:hidden;
+}
+.video-container video{width:100%;height:100%;object-fit:contain}
+.video-container iframe{width:100%;height:100%;border:none}
+.video-placeholder{
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;
+  color:var(--text3);text-align:center;padding:24px;
+}
+.video-placeholder .big-icon{font-size:3rem;opacity:0.4}
+.video-placeholder .ph-title{font-size:0.9rem;font-weight:600;color:var(--text2)}
+.video-placeholder .ph-sub{font-size:0.78rem}
+.drop-zone{
+  border:2px dashed var(--border2);border-radius:16px;padding:32px;cursor:pointer;
+  transition:all .2s;width:80%;max-width:320px;
+}
+.drop-zone:hover{border-color:var(--accent);background:rgba(99,102,241,0.04)}
+
+/* SUBTITLE OVERLAY */
+.subtitle-overlay{
+  position:absolute;bottom:16px;left:0;right:0;text-align:center;padding:0 16px;
+  pointer-events:none;z-index:10;
+}
+.subtitle-text{
+  display:inline-block;background:rgba(0,0,0,0.82);color:#fff;
+  font-size:0.88rem;font-weight:500;line-height:1.5;
+  padding:6px 14px;border-radius:8px;max-width:90%;
+  backdrop-filter:blur(4px);
+}
+.subtitle-text.hidden{display:none}
+
+/* VIDEO CONTROLS */
+.video-controls{
+  padding:10px 14px;background:var(--panel);border-top:1px solid var(--border);
+  display:flex;align-items:center;gap:8px;
+}
+.ctrl-btn{background:none;border:none;color:var(--text2);font-size:1rem;cursor:pointer;padding:4px;border-radius:6px;transition:all .15s}
+.ctrl-btn:hover{color:var(--text);background:var(--card)}
+.progress-track{flex:1;height:4px;background:var(--border2);border-radius:4px;cursor:pointer;position:relative}
+.progress-fill{height:100%;border-radius:4px;background:var(--accent);width:0%;transition:width .1s linear}
+.time-disp{font-size:0.72rem;color:var(--text3);font-family:'JetBrains Mono',monospace;white-space:nowrap}
+
+/* ─── BOTTOM: TRANSCRIPT ─── */
+.transcript-panel{
+  height:200px;min-height:200px;
+  border-top:1px solid var(--border);
+  display:flex;flex-direction:column;background:var(--panel);
+}
+.tp-header{
+  padding:8px 16px;border-bottom:1px solid var(--border);
+  display:flex;align-items:center;gap:0;
+}
+.tp-tab{
+  padding:6px 14px;background:none;border:none;color:var(--text3);
+  font-family:'Plus Jakarta Sans',sans-serif;font-size:0.78rem;font-weight:600;
+  cursor:pointer;border-bottom:2px solid transparent;transition:all .15s;
+}
+.tp-tab.active{color:var(--accent-h);border-color:var(--accent)}
+.tp-tab:hover{color:var(--text)}
+.tp-actions{margin-left:auto;display:flex;gap:6px}
+.tp-body{flex:1;display:flex;overflow:hidden}
+.tp-pane{flex:1;overflow-y:auto;padding:12px 16px;font-size:0.8rem;line-height:1.8;color:var(--text2)}
+.tp-pane+.tp-pane{border-left:1px solid var(--border)}
+.tp-pane::-webkit-scrollbar{width:3px}
+.tp-pane::-webkit-scrollbar-thumb{background:var(--border2);border-radius:3px}
+.tp-line{display:flex;gap:10px;padding:3px 0;border-radius:6px;cursor:pointer;transition:background .15s}
+.tp-line:hover{background:var(--card)}
+.tp-ts{font-family:'JetBrains Mono',monospace;color:var(--accent);font-size:0.72rem;min-width:52px;padding-top:2px}
+.tp-txt{color:var(--text2);flex:1}
+.tp-txt.translated{color:var(--text);font-weight:500}
+.tp-placeholder{color:var(--text3);font-size:0.8rem;padding:8px;text-align:center;margin-top:24px}
+
+/* ─── RIGHT PANEL ─── */
+.right-panel{
+  width:280px;min-width:280px;background:var(--panel);
+  border-left:1px solid var(--border);display:flex;flex-direction:column;overflow-y:auto;
+}
+.right-panel::-webkit-scrollbar{width:3px}
+.right-panel::-webkit-scrollbar-thumb{background:var(--border2)}
+.rp-section{padding:14px;border-bottom:1px solid var(--border)}
+.rp-title{font-size:0.72rem;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:1px;margin-bottom:10px}
+.rp-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+.rp-label{font-size:0.78rem;color:var(--text2);font-weight:500}
+.rp-select{
+  padding:5px 8px;border-radius:7px;border:1px solid var(--border);background:var(--card);
+  color:var(--text);font-family:'Plus Jakarta Sans',sans-serif;font-size:0.75rem;outline:none;cursor:pointer;
+  appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='5'%3E%3Cpath d='M1 1l3 3 3-3' stroke='%236b7280' stroke-width='1.5' fill='none'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;background-position:right 7px center;padding-right:20px;min-width:120px;
+}
+.rp-select option{background:#1a1d26}
+.rp-full{width:100%}
+.voice-card{
+  background:var(--card);border:1px solid var(--border);border-radius:9px;
+  padding:10px;margin-bottom:8px;cursor:pointer;transition:all .15s;display:flex;align-items:center;gap:10px;
+}
+.voice-card:hover,.voice-card.active{border-color:var(--accent);background:rgba(99,102,241,0.06)}
+.voice-avatar{width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0}
+.voice-info{flex:1}
+.voice-name{font-size:0.8rem;font-weight:600}
+.voice-meta{font-size:0.7rem;color:var(--text3)}
+.voice-play{background:none;border:1px solid var(--border2);border-radius:6px;padding:4px 8px;color:var(--text2);font-size:0.7rem;cursor:pointer;transition:all .15s}
+.voice-play:hover{border-color:var(--accent);color:var(--accent)}
+.slider-wrap{margin-top:6px}
+.slider-label{display:flex;justify-content:space-between;font-size:0.72rem;color:var(--text3);margin-bottom:4px}
+input[type=range]{width:100%;-webkit-appearance:none;height:4px;border-radius:4px;background:var(--border2);outline:none;cursor:pointer}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:14px;height:14px;border-radius:50%;background:var(--accent);cursor:pointer}
+
+/* PROGRESS MODAL */
+.modal-overlay{
+  position:fixed;inset:0;background:rgba(0,0,0,0.7);backdrop-filter:blur(4px);
+  display:flex;align-items:center;justify-content:center;z-index:200;
+  display:none;
+}
+.modal-overlay.show{display:flex}
+.modal-box{
+  background:var(--panel);border:1px solid var(--border2);border-radius:20px;
+  padding:32px;width:420px;box-shadow:0 24px 80px rgba(0,0,0,0.6),var(--glow);
+}
+.modal-title{font-size:1.1rem;font-weight:800;margin-bottom:6px}
+.modal-sub{font-size:0.82rem;color:var(--text2);margin-bottom:24px}
+.modal-prog-bg{height:8px;background:var(--card2);border-radius:8px;overflow:hidden;margin-bottom:12px}
+.modal-prog-fill{height:100%;border-radius:8px;background:linear-gradient(90deg,var(--accent),#8b5cf6);width:0%;transition:width .5s ease}
+.modal-steps{display:flex;flex-direction:column;gap:8px;margin-top:16px}
+.modal-step{display:flex;align-items:center;gap:12px;padding:8px 12px;border-radius:9px;background:var(--card);font-size:0.8rem}
+.step-icon{width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:0.7rem;flex-shrink:0}
+.step-pending{background:var(--border2);color:var(--text3)}
+.step-active{background:rgba(99,102,241,0.2);color:var(--accent);animation:pulse 1.2s infinite}
+.step-done{background:rgba(34,197,94,0.2);color:var(--green)}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.5}}
+.step-label{flex:1;color:var(--text2)}
+.step-label.active{color:var(--text)}
+.step-label.done{color:var(--text3)}
+
+/* INPUT STYLES */
+input[type=text],.url-field{
+  width:100%;padding:9px 12px;
+  background:var(--card);border:1px solid var(--border);border-radius:9px;
+  color:var(--text);font-family:'Plus Jakarta Sans',sans-serif;font-size:0.82rem;outline:none;
+  transition:border-color .15s;
+}
+input[type=text]:focus,.url-field:focus{border-color:var(--accent)}
+input::placeholder{color:var(--text3)}
+
+/* UPLOAD AREA */
+.upload-area{
+  border:2px dashed var(--border2);border-radius:14px;padding:28px 20px;text-align:center;
+  cursor:pointer;transition:all .2s;
+}
+.upload-area:hover{border-color:var(--accent);background:rgba(99,102,241,0.04)}
+.upload-icon{font-size:2rem;margin-bottom:8px;display:block}
+.upload-title{font-size:0.85rem;font-weight:600;margin-bottom:4px}
+.upload-sub{font-size:0.75rem;color:var(--text3)}
+
+/* TOAST */
+.toast{
+  position:fixed;bottom:20px;right:20px;
+  background:var(--card);border:1px solid var(--border2);border-radius:10px;
+  padding:12px 18px;font-size:0.82rem;font-weight:500;
+  box-shadow:0 8px 32px rgba(0,0,0,0.5);z-index:300;
+  transform:translateY(80px);opacity:0;transition:all .3s;
+}
+.toast.show{transform:translateY(0);opacity:1}
+.toast.success{border-color:rgba(34,197,94,0.4);color:var(--green)}
+.toast.error{border-color:rgba(239,68,68,0.4);color:var(--red)}
+.toast.info{border-color:rgba(99,102,241,0.4);color:var(--accent-h)}
+
+/* TABS inside pages */
+.page{display:none}
+.page.show{display:flex;flex-direction:column;flex:1;overflow:hidden}
+
+/* Translate button */
+.btn-translate-main{
+  display:flex;align-items:center;justify-content:center;gap:8px;
+  padding:10px 20px;background:linear-gradient(135deg,var(--accent),#8b5cf6);
+  border:none;border-radius:10px;color:#fff;font-family:'Plus Jakarta Sans',sans-serif;
+  font-size:0.85rem;font-weight:700;cursor:pointer;transition:all .2s;
+}
+.btn-translate-main:hover{transform:translateY(-1px);box-shadow:0 6px 24px rgba(99,102,241,0.4)}
+.btn-translate-main:disabled{opacity:0.5;cursor:not-allowed;transform:none;box-shadow:none}
+
+/* LANG FLAG */
+.lang-sel-row{display:flex;align-items:center;gap:8px;padding:8px;background:var(--card);border:1px solid var(--border);border-radius:10px;margin-bottom:12px}
+.lang-from,.lang-to{flex:1;text-align:center}
+.lang-lbl{font-size:0.65rem;color:var(--text3);margin-bottom:2px;text-transform:uppercase;letter-spacing:.5px}
+.lang-val{font-size:0.85rem;font-weight:600}
+.swap-btn{background:var(--card2);border:1px solid var(--border2);border-radius:6px;padding:4px 8px;color:var(--text2);cursor:pointer;font-size:0.75rem;transition:all .15s}
+.swap-btn:hover{color:var(--accent);border-color:var(--accent);transform:rotate(180deg)}
+
+/* scrollbars */
+::-webkit-scrollbar{width:4px;height:4px}
+::-webkit-scrollbar-thumb{background:var(--border2);border-radius:4px}
+</style>
+</head>
+<body>
+
+<!-- ══════════ TOP NAV ══════════ -->
+<div class="topnav">
+  <div class="logo-wrap">
+    <div class="logo-box">🌐</div>
+    <div class="logo-text">Translate<span>Hub</span></div>
+  </div>
+  <div class="nav-tabs">
+    <button class="nav-tab active" onclick="switchPage('video')"><span>🎬</span> Video Translate</button>
+    <button class="nav-tab" onclick="switchPage('youtube')"><span>▶️</span> YouTube</button>
+    <button class="nav-tab" onclick="switchPage('text')"><span>💬</span> Text & Script</button>
+  </div>
+  <div class="topnav-right">
+    <button class="btn-sm btn-ghost">⬇️ Export</button>
+    <button class="btn-sm btn-primary" id="mainTranslateBtn" onclick="triggerTranslate()">✨ Translate Now</button>
+    <div class="avatar">U</div>
+  </div>
+</div>
+
+<!-- ══════════ MAIN ══════════ -->
+<div class="main">
+
+<!-- LEFT SIDEBAR -->
+<div class="sidebar">
+  <div class="sidebar-section">
+    <div class="sidebar-label">My Projects</div>
+    <button class="side-btn active" onclick="toast('Project selected','info')"><span class="icon">📁</span> My Translations</button>
+    <button class="side-btn" onclick="toast('Recent files','info')"><span class="icon">🕐</span> Recent</button>
+    <button class="side-btn" onclick="toast('Starred projects','info')"><span class="icon">⭐</span> Starred</button>
+  </div>
+  <div class="sidebar-section">
+    <div class="sidebar-label">Tools</div>
+    <button class="side-btn" onclick="switchPage('video');setActive(this)"><span class="icon">🎥</span> Video Upload</button>
+    <button class="side-btn" onclick="switchPage('youtube');setActive(this)"><span class="icon">▶️</span> YouTube URL</button>
+    <button class="side-btn" onclick="switchPage('text');setActive(this)"><span class="icon">📝</span> Text Translate</button>
+    <button class="side-btn" onclick="toast('Voice cloning - coming!','info')"><span class="icon">🎙️</span> Voice Clone <span class="badge">PRO</span></button>
+    <button class="side-btn" onclick="toast('Avatar feature - coming!','info')"><span class="icon">🧑‍💻</span> AI Avatar <span class="badge">PRO</span></button>
+    <button class="side-btn" onclick="toast('Caption editor','info')"><span class="icon">💬</span> Captions</button>
+  </div>
+  <div class="sidebar-section">
+    <div class="sidebar-label">Downloads</div>
+    <button class="side-btn" onclick="downloadSRT()"><span class="icon">💬</span> Download SRT</button>
+    <button class="side-btn" onclick="downloadTranscript()"><span class="icon">📄</span> Download TXT</button>
+    <button class="side-btn" onclick="toast('MP4 download — backend required','info')"><span class="icon">🎬</span> Download MP4</button>
+    <button class="side-btn" onclick="toast('MP3 download — backend required','info')"><span class="icon">🎵</span> Download MP3</button>
+  </div>
+  <div class="sidebar-section">
+    <div class="sidebar-label">History</div>
+    <button class="side-btn" onclick="loadHistoryItem('Tutorial Video',true)"><span class="icon">🗂️</span> Tutorial Video</button>
+    <button class="side-btn" onclick="loadHistoryItem('Product Demo',true)"><span class="icon">🗂️</span> Product Demo</button>
+  </div>
+</div>
+
+<!-- WORKSPACE -->
+<div class="workspace">
+
+  <!-- ── PAGE: VIDEO UPLOAD ── -->
+  <div class="page show" id="page-video" style="flex-direction:column">
+    <div class="toolbar">
+      <div class="toolbar-group">
+        <div class="lang-arrow">
+          <select class="select-sm" id="v-src">
+            <option value="auto">🔍 Auto Detect</option>
+            <option value="en">🇬🇧 English</option>
+            <option value="hi">🇮🇳 Hindi</option>
+            <option value="ur">🇵🇰 Urdu</option>
+            <option value="ar">🇸🇦 Arabic</option>
+            <option value="fr">🇫🇷 French</option>
+            <option value="es">🇪🇸 Spanish</option>
+            <option value="zh">🇨🇳 Chinese</option>
+            <option value="ja">🇯🇵 Japanese</option>
+          </select>
+          <span>→</span>
+          <select class="select-sm" id="v-tgt" onchange="updateLangDisplay()">
+            <option value="hi">🇮🇳 Hindi</option>
+            <option value="ur">🇵🇰 Urdu</option>
+            <option value="en">🇬🇧 English</option>
+            <option value="ar">🇸🇦 Arabic</option>
+            <option value="fr">🇫🇷 French</option>
+            <option value="es">🇪🇸 Spanish</option>
+            <option value="de">🇩🇪 German</option>
+            <option value="zh">🇨🇳 Chinese</option>
+            <option value="ja">🇯🇵 Japanese</option>
+            <option value="ko">🇰🇷 Korean</option>
+            <option value="ru">🇷🇺 Russian</option>
+            <option value="pt">🇧🇷 Portuguese</option>
+            <option value="tr">🇹🇷 Turkish</option>
+            <option value="bn">🇧🇩 Bengali</option>
+            <option value="pa">🇮🇳 Punjabi</option>
+            <option value="ta">🇮🇳 Tamil</option>
+            <option value="te">🇮🇳 Telugu</option>
+          </select>
+        </div>
+      </div>
+      <div class="toolbar-divider"></div>
+      <div class="toolbar-group">
+        <button class="tb-btn" onclick="toggleSubtitles()" id="subBtn">💬 Subtitles ON</button>
+        <button class="tb-btn" onclick="toast('Audio dubbing mode activated','info')">🎙️ Dubbing</button>
+        <select class="select-sm" id="quality-sel">
+          <option>🔥 High Quality</option>
+          <option>⚡ Fast Mode</option>
+        </select>
+      </div>
+      <div class="toolbar-divider"></div>
+      <button class="tb-btn" id="uploadTrigger" onclick="document.getElementById('videoFileInput').click()">📂 Upload Video</button>
+      <input type="file" id="videoFileInput" accept="video/*" style="display:none" onchange="handleVideoUpload(event)">
+    </div>
+
+    <div class="video-workspace" style="flex:1;overflow:hidden">
+      <!-- Original video -->
+      <div class="video-col">
+        <div class="video-col-header">
+          <div class="col-title"><span>📹</span> Original Video <span class="col-badge badge-orig">SOURCE</span></div>
+          <div style="font-size:0.72rem;color:var(--text3)" id="orig-duration">--:--</div>
+        </div>
+        <div class="video-container" id="origContainer">
+          <div class="video-placeholder" id="uploadPlaceholder">
+            <div class="big-icon">🎬</div>
+            <div class="ph-title">Video Upload Karo</div>
+            <div class="ph-sub" style="margin-bottom:14px">MP4, MOV, AVI, WebM — max 500MB</div>
+            <div class="drop-zone" onclick="document.getElementById('videoFileInput').click()">
+              <div style="font-size:1.5rem;margin-bottom:8px">⬆️</div>
+              <div style="font-size:0.82rem;font-weight:600;margin-bottom:4px">Click ya Drag & Drop</div>
+              <div style="font-size:0.72rem;color:var(--text3)">Ya neeche YouTube URL use karo</div>
+            </div>
+          </div>
+          <video id="origVideo" style="display:none;width:100%;height:100%;object-fit:contain" controls></video>
+          <div class="subtitle-overlay" id="origSubtitle"><span class="subtitle-text hidden" id="origSubText"></span></div>
+        </div>
+        <div class="video-controls" id="origControls" style="display:none">
+          <button class="ctrl-btn" onclick="togglePlay('orig')">▶</button>
+          <div class="progress-track" onclick="seekVideo(event,'orig')">
+            <div class="progress-fill" id="origProgress"></div>
+          </div>
+          <span class="time-disp" id="origTime">0:00 / 0:00</span>
+          <button class="ctrl-btn" onclick="toggleMute('orig')">🔊</button>
+        </div>
+      </div>
+
+      <!-- Translated preview -->
+      <div class="video-col">
+        <div class="video-col-header">
+          <div class="col-title"><span>✨</span> Translated Preview <span class="col-badge badge-trans" id="transLangBadge">HINDI</span></div>
+          <span class="col-badge badge-live" id="liveBadge" style="display:none">● LIVE</span>
+        </div>
+        <div class="video-container" id="transContainer">
+          <div class="video-placeholder" id="transPlaceholder">
+            <div class="big-icon">🌐</div>
+            <div class="ph-title">Translation Preview</div>
+            <div class="ph-sub">Video translate karne ke baad yahaan<br>translated subtitles ke saath preview dikhega</div>
+          </div>
+          <video id="transVideo" style="display:none;width:100%;height:100%;object-fit:contain"></video>
+          <div class="subtitle-overlay" id="transSubtitle">
+            <span class="subtitle-text hidden" id="transSubText"></span>
+          </div>
+        </div>
+        <div class="video-controls" id="transControls" style="display:none">
+          <button class="ctrl-btn" onclick="togglePlay('trans')">▶</button>
+          <div class="progress-track" onclick="seekVideo(event,'trans')">
+            <div class="progress-fill" id="transProgress"></div>
+          </div>
+          <span class="time-disp" id="transTime">0:00 / 0:00</span>
+          <button class="ctrl-btn" onclick="toggleMute('trans')">🔊</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Transcript panel -->
+    <div class="transcript-panel">
+      <div class="tp-header">
+        <button class="tp-tab active" onclick="switchTpTab('both',this)">Both</button>
+        <button class="tp-tab" onclick="switchTpTab('orig',this)">Original</button>
+        <button class="tp-tab" onclick="switchTpTab('trans',this)">Translated</button>
+        <div class="tp-actions">
+          <button class="btn-sm btn-ghost" onclick="copyAllTranscript()">📋 Copy</button>
+          <button class="btn-sm btn-ghost" onclick="downloadSRT()">⬇️ SRT</button>
+          <button class="btn-sm btn-ghost" onclick="downloadTranscript()">📄 TXT</button>
+        </div>
+      </div>
+      <div class="tp-body" id="tp-body">
+        <div class="tp-pane" id="tp-orig">
+          <div class="tp-placeholder" id="origTransPlaceholder">Original transcript yahaan aayega translate karne ke baad...</div>
+        </div>
+        <div class="tp-pane" id="tp-trans">
+          <div class="tp-placeholder" id="transTransPlaceholder">Translated transcript yahaan aayega...</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── PAGE: YOUTUBE ── -->
+  <div class="page" id="page-youtube" style="flex-direction:column">
+    <div class="toolbar">
+      <div style="flex:1;display:flex;align-items:center;gap:8px">
+        <span style="font-size:0.8rem;color:var(--text2);white-space:nowrap;font-weight:600">▶️ YouTube URL:</span>
+        <input type="text" id="ytInput" placeholder="https://www.youtube.com/watch?v=..." style="flex:1;max-width:480px">
+        <button class="tb-btn" onclick="loadYouTube()" style="white-space:nowrap">Load Video</button>
+      </div>
+      <div class="toolbar-divider"></div>
+      <select class="select-sm" id="yt-src">
+        <option value="auto">🔍 Auto</option>
+        <option value="en">🇬🇧 English</option>
+        <option value="hi">🇮🇳 Hindi</option>
+        <option value="ur">🇵🇰 Urdu</option>
+      </select>
+      <span style="color:var(--text3);font-size:0.9rem">→</span>
+      <select class="select-sm" id="yt-tgt" onchange="updateYtLangBadge()">
+        <option value="hi">🇮🇳 Hindi</option>
+        <option value="ur">🇵🇰 Urdu</option>
+        <option value="en">🇬🇧 English</option>
+        <option value="ar">🇸🇦 Arabic</option>
+        <option value="fr">🇫🇷 French</option>
+        <option value="es">🇪🇸 Spanish</option>
+        <option value="de">🇩🇪 German</option>
+        <option value="zh">🇨🇳 Chinese</option>
+        <option value="ja">🇯🇵 Japanese</option>
+        <option value="ko">🇰🇷 Korean</option>
+        <option value="ru">🇷🇺 Russian</option>
+        <option value="bn">🇧🇩 Bengali</option>
+        <option value="pa">🇮🇳 Punjabi</option>
+        <option value="ta">🇮🇳 Tamil</option>
+        <option value="te">🇮🇳 Telugu</option>
+        <option value="gu">🇮🇳 Gujarati</option>
+      </select>
+      <button class="btn-translate-main" onclick="triggerTranslate()">✨ Translate</button>
+    </div>
+
+    <div class="video-workspace" style="flex:1">
+      <div class="video-col">
+        <div class="video-col-header">
+          <div class="col-title"><span>▶️</span> Original YouTube <span class="col-badge badge-orig">SOURCE</span></div>
+        </div>
+        <div class="video-container" id="ytOrigContainer">
+          <div class="video-placeholder" id="ytPlaceholder">
+            <div class="big-icon">▶️</div>
+            <div class="ph-title">YouTube URL Paste Karo</div>
+            <div class="ph-sub">Upar URL paste karo aur Load Video click karo</div>
+          </div>
+          <div id="ytEmbed" style="width:100%;height:100%;display:none">
+            <iframe id="ytFrame" width="100%" height="100%" frameborder="0" allowfullscreen></iframe>
+          </div>
+          <div class="subtitle-overlay" id="ytOrigSub"><span class="subtitle-text hidden" id="ytOrigSubText"></span></div>
+        </div>
+      </div>
+      <div class="video-col">
+        <div class="video-col-header">
+          <div class="col-title"><span>✨</span> Translated Preview <span class="col-badge badge-trans" id="ytTransBadge">HINDI</span></div>
+          <span class="col-badge badge-live" id="ytLiveBadge" style="display:none">● LIVE</span>
+        </div>
+        <div class="video-container" id="ytTransContainer">
+          <div class="video-placeholder" id="ytTransPlaceholder">
+            <div class="big-icon">🌐</div>
+            <div class="ph-title">Translated Preview</div>
+            <div class="ph-sub">YouTube video ke translated subtitles<br>yahaan overlay ke saath dikhenge</div>
+          </div>
+          <div id="ytTransEmbed" style="width:100%;height:100%;display:none;position:relative">
+            <iframe id="ytTransFrame" width="100%" height="100%" frameborder="0" allowfullscreen></iframe>
+            <div class="subtitle-overlay" id="ytTransSub"><span class="subtitle-text" id="ytTransSubText" style="animation:subFade 1s ease"></span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="transcript-panel">
+      <div class="tp-header">
+        <button class="tp-tab active" onclick="switchTpTab2('both',this)">Both</button>
+        <button class="tp-tab" onclick="switchTpTab2('orig',this)">Original</button>
+        <button class="tp-tab" onclick="switchTpTab2('trans',this)">Translated</button>
+        <div class="tp-actions">
+          <button class="btn-sm btn-ghost" onclick="copyAllTranscript()">📋 Copy</button>
+          <button class="btn-sm btn-ghost" onclick="downloadSRT()">⬇️ SRT</button>
+        </div>
+      </div>
+      <div class="tp-body" id="tp-body2">
+        <div class="tp-pane" id="tp-orig2"><div class="tp-placeholder">Transcript yahaan aayega...</div></div>
+        <div class="tp-pane" id="tp-trans2"><div class="tp-placeholder">Translation yahaan aayega...</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── PAGE: TEXT ── -->
+  <div class="page" id="page-text" style="flex-direction:column">
+    <div class="toolbar">
+      <select class="select-sm" id="txt-src">
+        <option value="auto">🔍 Auto Detect</option>
+        <option value="en">🇬🇧 English</option>
+        <option value="hi">🇮🇳 Hindi</option>
+        <option value="ur">🇵🇰 Urdu</option>
+        <option value="ar">🇸🇦 Arabic</option>
+        <option value="fr">🇫🇷 French</option>
+      </select>
+      <span style="color:var(--text3)">→</span>
+      <select class="select-sm" id="txt-tgt">
+        <option value="ur">🇵🇰 Urdu</option>
+        <option value="hi">🇮🇳 Hindi</option>
+        <option value="en">🇬🇧 English</option>
+        <option value="ar">🇸🇦 Arabic</option>
+        <option value="fr">🇫🇷 French</option>
+        <option value="es">🇪🇸 Spanish</option>
+        <option value="de">🇩🇪 German</option>
+        <option value="zh">🇨🇳 Chinese</option>
+        <option value="ja">🇯🇵 Japanese</option>
+        <option value="ko">🇰🇷 Korean</option>
+        <option value="ru">🇷🇺 Russian</option>
+        <option value="bn">🇧🇩 Bengali</option>
+      </select>
+      <div class="toolbar-divider"></div>
+      <select class="select-sm">
+        <option>Formal Tone</option>
+        <option>Casual Tone</option>
+        <option>News Style</option>
+        <option>Literary</option>
+      </select>
+      <button class="btn-translate-main" onclick="translateText()">🌐 Translate</button>
+      <div style="margin-left:auto;font-size:0.72rem;color:var(--text3)" id="txt-char">0 / 5000</div>
+    </div>
+    <div style="display:flex;flex:1;overflow:hidden;gap:0">
+      <div style="flex:1;display:flex;flex-direction:column;border-right:1px solid var(--border)">
+        <div class="video-col-header"><div class="col-title">📝 Original Text</div></div>
+        <textarea id="txtInput" placeholder="Yahaan apna text likho ya paste karo..." oninput="document.getElementById('txt-char').textContent=this.value.length+' / 5000'"
+          style="flex:1;padding:16px;background:var(--bg);border:none;color:var(--text);font-family:'Plus Jakarta Sans',sans-serif;font-size:0.88rem;resize:none;outline:none;line-height:1.8"></textarea>
+      </div>
+      <div style="flex:1;display:flex;flex-direction:column">
+        <div class="video-col-header">
+          <div class="col-title">✨ Translated Text</div>
+          <button class="btn-sm btn-ghost" onclick="copyText()" style="font-size:0.7rem">📋 Copy</button>
+        </div>
+        <textarea id="txtOutput" readonly placeholder="Translation yahaan dikhegi..."
+          style="flex:1;padding:16px;background:var(--bg);border:none;color:var(--text);font-family:'Plus Jakarta Sans',sans-serif;font-size:0.88rem;resize:none;outline:none;line-height:1.8;opacity:0.85"></textarea>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /workspace -->
+
+<!-- RIGHT PANEL -->
+<div class="right-panel">
+  <div class="rp-section">
+    <div class="rp-title">🌐 Language Settings</div>
+    <div class="rp-row"><div class="rp-label">Source</div>
+      <select class="rp-select" id="rp-src">
+        <option>🔍 Auto Detect</option>
+        <option>🇬🇧 English</option>
+        <option>🇮🇳 Hindi</option>
+        <option>🇵🇰 Urdu</option>
+        <option>🇸🇦 Arabic</option>
+      </select>
+    </div>
+    <div class="rp-row"><div class="rp-label">Target</div>
+      <select class="rp-select" id="rp-tgt" onchange="syncLang()">
+        <option value="hi">🇮🇳 Hindi</option>
+        <option value="ur">🇵🇰 Urdu</option>
+        <option value="en">🇬🇧 English</option>
+        <option value="ar">🇸🇦 Arabic</option>
+        <option value="fr">🇫🇷 French</option>
+        <option value="es">🇪🇸 Spanish</option>
+        <option value="de">🇩🇪 German</option>
+        <option value="zh">🇨🇳 Chinese</option>
+        <option value="ja">🇯🇵 Japanese</option>
+        <option value="ko">🇰🇷 Korean</option>
+        <option value="bn">🇧🇩 Bengali</option>
+      </select>
+    </div>
+    <div class="rp-row"><div class="rp-label">Dialect</div>
+      <select class="rp-select"><option>Standard</option><option>Regional</option></select>
+    </div>
+    <div class="rp-row"><div class="rp-label">Output</div>
+      <select class="rp-select" id="rp-output">
+        <option>Subtitles Only</option>
+        <option>Dubbing + Subs</option>
+        <option>Transcript</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="rp-section">
+    <div class="rp-title">🎙️ Voice Selection</div>
+    <div class="voice-card active" onclick="selectVoice(this,'Aria')">
+      <div class="voice-avatar" style="background:linear-gradient(135deg,#6366f1,#ec4899)">👩</div>
+      <div class="voice-info"><div class="voice-name">Aria</div><div class="voice-meta">Natural · Female · EN/HI</div></div>
+      <button class="voice-play" onclick="event.stopPropagation();toast('Voice preview playing...','info')">▶</button>
+    </div>
+    <div class="voice-card" onclick="selectVoice(this,'Rohan')">
+      <div class="voice-avatar" style="background:linear-gradient(135deg,#0ea5e9,#6366f1)">👨</div>
+      <div class="voice-info"><div class="voice-name">Rohan</div><div class="voice-meta">Formal · Male · HI/UR</div></div>
+      <button class="voice-play" onclick="event.stopPropagation();toast('Voice preview playing...','info')">▶</button>
+    </div>
+    <div class="voice-card" onclick="selectVoice(this,'Zara')">
+      <div class="voice-avatar" style="background:linear-gradient(135deg,#f97316,#ef4444)">👩</div>
+      <div class="voice-info"><div class="voice-name">Zara</div><div class="voice-meta">Casual · Female · AR/UR</div></div>
+      <button class="voice-play" onclick="event.stopPropagation();toast('Voice preview playing...','info')">▶</button>
+    </div>
+    <div class="voice-card" onclick="selectVoice(this,'James')">
+      <div class="voice-avatar" style="background:linear-gradient(135deg,#22c55e,#0ea5e9)">👨</div>
+      <div class="voice-info"><div class="voice-name">James</div><div class="voice-meta">News · Male · EN/FR</div></div>
+      <button class="voice-play" onclick="event.stopPropagation();toast('Voice preview playing...','info')">▶</button>
+    </div>
+  </div>
+
+  <div class="rp-section">
+    <div class="rp-title">⚙️ Settings</div>
+    <div class="slider-wrap">
+      <div class="slider-label"><span>Speech Speed</span><span id="speedVal">1.0x</span></div>
+      <input type="range" min="50" max="150" value="100" oninput="document.getElementById('speedVal').textContent=(this.value/100).toFixed(1)+'x'">
+    </div>
+    <div class="slider-wrap" style="margin-top:12px">
+      <div class="slider-label"><span>Voice Pitch</span><span id="pitchVal">Normal</span></div>
+      <input type="range" min="-5" max="5" value="0" oninput="document.getElementById('pitchVal').textContent=this.value==0?'Normal':this.value>0?'+'+this.value:this.value">
+    </div>
+    <div class="slider-wrap" style="margin-top:12px">
+      <div class="slider-label"><span>Subtitle Size</span><span id="subSizeVal">Medium</span></div>
+      <input type="range" min="1" max="3" value="2" oninput="['Small','Medium','Large'].forEach((v,i)=>{if(i==this.value-1)document.getElementById('subSizeVal').textContent=v})">
+    </div>
+    <div style="margin-top:12px">
+      <div class="rp-row">
+        <div class="rp-label">Background Removal</div>
+        <label class="toggle" style="cursor:pointer">
+          <input type="checkbox" id="bgRemove" onchange="toast('Background removal '+(this.checked?'ON':'OFF'),'info')" style="display:none">
+          <div id="bgToggle" onclick="document.getElementById('bgRemove').click();this.style.background=document.getElementById('bgRemove').checked?'var(--accent)':'var(--border2)'" style="width:32px;height:18px;background:var(--border2);border-radius:9px;position:relative;transition:.2s">
+            <div style="width:12px;height:12px;background:#fff;border-radius:50%;position:absolute;top:3px;left:3px;transition:.2s" id="bgToggleDot"></div>
+          </div>
+        </label>
+      </div>
+      <div class="rp-row">
+        <div class="rp-label">Auto Sync Timing</div>
+        <label style="cursor:pointer">
+          <div onclick="this.setAttribute('data-on',this.getAttribute('data-on')=='1'?'0':'1');this.style.background=this.getAttribute('data-on')=='1'?'var(--accent)':'var(--border2)'" data-on="1" style="width:32px;height:18px;background:var(--accent);border-radius:9px;position:relative;transition:.2s">
+            <div style="width:12px;height:12px;background:#fff;border-radius:50%;position:absolute;top:3px;left:3px;transition:.2s"></div>
+          </div>
+        </label>
+      </div>
+    </div>
+  </div>
+
+  <div class="rp-section">
+    <div class="rp-title">📊 Stats</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+      <div style="background:var(--card);border-radius:9px;padding:10px;text-align:center">
+        <div style="font-size:1.2rem;font-weight:800;color:var(--accent)" id="statWords">0</div>
+        <div style="font-size:0.68rem;color:var(--text3);margin-top:2px">Words</div>
+      </div>
+      <div style="background:var(--card);border-radius:9px;padding:10px;text-align:center">
+        <div style="font-size:1.2rem;font-weight:800;color:var(--green)" id="statSubs">0</div>
+        <div style="font-size:0.68rem;color:var(--text3);margin-top:2px">Subtitles</div>
+      </div>
+      <div style="background:var(--card);border-radius:9px;padding:10px;text-align:center">
+        <div style="font-size:1.2rem;font-weight:800;color:var(--orange)" id="statDur">0s</div>
+        <div style="font-size:0.68rem;color:var(--text3);margin-top:2px">Duration</div>
+      </div>
+      <div style="background:var(--card);border-radius:9px;padding:10px;text-align:center">
+        <div style="font-size:1.2rem;font-weight:800;color:var(--yellow)" id="statLang">—</div>
+        <div style="font-size:0.68rem;color:var(--text3);margin-top:2px">Language</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</div><!-- /main -->
+
+<!-- ══ PROGRESS MODAL ══ -->
+<div class="modal-overlay" id="progressModal">
+  <div class="modal-box">
+    <div class="modal-title">🌐 Translating...</div>
+    <div class="modal-sub" id="modalSub">Please wait while we process your content</div>
+    <div class="modal-prog-bg"><div class="modal-prog-fill" id="modalProg"></div></div>
+    <div style="font-size:0.75rem;color:var(--text3);text-align:right;margin-top:4px" id="modalPct">0%</div>
+    <div class="modal-steps">
+      <div class="modal-step" id="ms1"><div class="step-icon step-pending" id="ms1i">1</div><div class="step-label" id="ms1l">🔍 Content analyze ho raha hai</div></div>
+      <div class="modal-step" id="ms2"><div class="step-icon step-pending" id="ms2i">2</div><div class="step-label" id="ms2l">📝 Speech-to-Text (Transcription)</div></div>
+      <div class="modal-step" id="ms3"><div class="step-icon step-pending" id="ms3i">3</div><div class="step-label" id="ms3l">🌐 AI Translation engine</div></div>
+      <div class="modal-step" id="ms4"><div class="step-icon step-pending" id="ms4i">4</div><div class="step-label" id="ms4l">🎙️ Voice synthesis & timing</div></div>
+      <div class="modal-step" id="ms5"><div class="step-icon step-pending" id="ms5i">5</div><div class="step-label" id="ms5l">✅ Preview generate ho rahi hai</div></div>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toastEl"></div>
+
+<style>
+@keyframes subFade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+</style>
+
+<script>
+// ─── Global state ───
+let currentPage = 'video';
+let subtitlesOn = true;
+let origVideoLoaded = false;
+let translationDone = false;
+let subtitleInterval = null;
+let currentVideoId = null;
+
+const SAMPLE_ORIGINAL = [
+  {t:'0:03', text:'Welcome to this amazing video tutorial.'},
+  {t:'0:07', text:'Today we will learn something very interesting.'},
+  {t:'0:12', text:'This content is automatically transcribed using AI.'},
+  {t:'0:17', text:'The translation engine supports over 75 languages.'},
+  {t:'0:22', text:'You can download the subtitles in SRT format.'},
+  {t:'0:27', text:'Thank you for using TranslateHub Studio.'},
+];
+
+const TRANSLATIONS = {
+  hi:[
+    'इस अद्भुत वीडियो ट्यूटोरियल में आपका स्वागत है।',
+    'आज हम कुछ बहुत रोचक सीखेंगे।',
+    'यह सामग्री AI का उपयोग करके स्वचालित रूप से ट्रांसक्राइब की गई है।',
+    'ट्रांसलेशन इंजन 75 से अधिक भाषाओं का समर्थन करता है।',
+    'आप SRT फॉर्मेट में सबटाइटल डाउनलोड कर सकते हैं।',
+    'TranslateHub Studio का उपयोग करने के लिए धन्यवाद।',
+  ],
+  ur:[
+    'اس شاندار ویڈیو ٹیوٹوریل میں آپ کا خیرمقدم ہے۔',
+    'آج ہم کچھ بہت دلچسپ سیکھیں گے۔',
+    'یہ مواد AI کا استعمال کرتے ہوئے خودکار طریقے سے ٹرانسکرائب کیا گیا ہے۔',
+    'ٹرانسلیشن انجن 75 سے زیادہ زبانوں کی حمایت کرتا ہے۔',
+    'آپ SRT فارمیٹ میں سب ٹائٹل ڈاؤن لوڈ کر سکتے ہیں۔',
+    'TranslateHub Studio استعمال کرنے کا شکریہ۔',
+  ],
+  ar:[
+    'مرحباً بكم في هذا البرنامج التعليمي الرائع.',
+    'سنتعلم اليوم شيئاً مثيراً للاهتمام.',
+    'تمت كتابة هذا المحتوى تلقائياً باستخدام الذكاء الاصطناعي.',
+    'يدعم محرك الترجمة أكثر من 75 لغة.',
+    'يمكنك تنزيل الترجمات بتنسيق SRT.',
+    'شكراً لاستخدام TranslateHub Studio.',
+  ],
+  fr:[
+    'Bienvenue dans ce formidable tutoriel vidéo.',
+    "Aujourd'hui nous allons apprendre quelque chose de très intéressant.",
+    'Ce contenu est transcrit automatiquement par IA.',
+    "Le moteur de traduction supporte plus de 75 langues.",
+    'Vous pouvez télécharger les sous-titres en format SRT.',
+    'Merci d\'utiliser TranslateHub Studio.',
+  ],
+  es:[
+    'Bienvenido a este increíble tutorial de vídeo.',
+    'Hoy aprenderemos algo muy interesante.',
+    'Este contenido se transcribe automáticamente usando IA.',
+    'El motor de traducción admite más de 75 idiomas.',
+    'Puedes descargar los subtítulos en formato SRT.',
+    'Gracias por usar TranslateHub Studio.',
+  ],
+  de:[
+    'Willkommen bei diesem tollen Video-Tutorial.',
+    'Heute lernen wir etwas sehr Interessantes.',
+    'Dieser Inhalt wird automatisch per KI transkribiert.',
+    'Die Übersetzungsmaschine unterstützt über 75 Sprachen.',
+    'Sie können die Untertitel im SRT-Format herunterladen.',
+    'Vielen Dank für die Nutzung von TranslateHub Studio.',
+  ],
+};
+const DEFAULT_TRANS = (lang) => SAMPLE_ORIGINAL.map(s=>`[${lang.toUpperCase()}] ${s.text}`);
+
+function getTranslation(lang){
+  return TRANSLATIONS[lang] || DEFAULT_TRANS(lang);
+}
+
+// ─── Page switching ───
+function switchPage(name){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('show'));
+  document.getElementById('page-'+name).classList.add('show');
+  currentPage = name;
+  document.querySelectorAll('.nav-tab').forEach(b=>b.classList.remove('active'));
+  ['video','youtube','text'].forEach((n,i)=>{
+    if(n===name) document.querySelectorAll('.nav-tab')[i].classList.add('active');
+  });
+}
+
+function setActive(el){
+  document.querySelectorAll('.side-btn').forEach(b=>b.classList.remove('active'));
+  el.classList.add('active');
+}
+
+// ─── Language display ───
+function updateLangDisplay(){
+  const sel = document.getElementById('v-tgt');
+  const txt = sel.options[sel.selectedIndex].text.replace(/^[^\s]+\s/,'');
+  document.getElementById('transLangBadge').textContent = txt.toUpperCase().substring(0,6);
+  document.getElementById('statLang').textContent = txt.substring(0,4);
+}
+
+function updateYtLangBadge(){
+  const sel = document.getElementById('yt-tgt');
+  const txt = sel.options[sel.selectedIndex].text.replace(/^[^\s]+\s/,'');
+  document.getElementById('ytTransBadge').textContent = txt.toUpperCase().substring(0,6);
+}
+
+function syncLang(){
+  const val = document.getElementById('rp-tgt').value;
+  ['v-tgt','yt-tgt'].forEach(id=>{
+    const el = document.getElementById(id);
+    if(el) [...el.options].forEach(o=>{ if(o.value===val) el.value=val; });
+  });
+  updateLangDisplay();
+  updateYtLangBadge();
+}
+
+// ─── Video Upload ───
+function handleVideoUpload(e){
+  const file = e.target.files[0];
+  if(!file){ return; }
+  const url = URL.createObjectURL(file);
+  const vid = document.getElementById('origVideo');
+  vid.src = url;
+  document.getElementById('uploadPlaceholder').style.display='none';
+  vid.style.display='block';
+  document.getElementById('origControls').style.display='flex';
+
+  vid.onloadedmetadata = ()=>{
+    const dur = vid.duration;
+    document.getElementById('orig-duration').textContent = fmtTime(dur);
+    document.getElementById('statDur').textContent = Math.round(dur)+'s';
+    origVideoLoaded = true;
+    toast('✅ Video load ho gayi! Ab Translate karo.','success');
+  };
+  vid.ontimeupdate = ()=> updateVideoProgress('orig', vid);
+}
+
+function fmtTime(s){
+  const m=Math.floor(s/60), sec=Math.floor(s%60);
+  return `${m}:${sec.toString().padStart(2,'0')}`;
+}
+
+function updateVideoProgress(type, vid){
+  const pct = (vid.currentTime/vid.duration)*100 || 0;
+  document.getElementById(type+'Progress').style.width=pct+'%';
+  document.getElementById(type+'Time').textContent=fmtTime(vid.currentTime)+' / '+fmtTime(vid.duration);
+}
+
+function togglePlay(type){
+  const vid = document.getElementById(type+'Video');
+  if(vid.paused){ vid.play(); } else { vid.pause(); }
+}
+
+function toggleMute(type){
+  const vid = document.getElementById(type+'Video');
+  vid.muted = !vid.muted;
+}
+
+function seekVideo(e, type){
+  const vid = document.getElementById(type+'Video');
+  const rect = e.currentTarget.getBoundingClientRect();
+  vid.currentTime = ((e.clientX-rect.left)/rect.width)*vid.duration;
+}
+
+// ─── Subtitles toggle ───
+function toggleSubtitles(){
+  subtitlesOn = !subtitlesOn;
+  const btn = document.getElementById('subBtn');
+  btn.textContent = subtitlesOn ? '💬 Subtitles ON' : '💬 Subtitles OFF';
+  btn.classList.toggle('green', subtitlesOn);
+  if(!subtitlesOn){
+    document.getElementById('transSubText').classList.add('hidden');
+    document.getElementById('origSubText').classList.add('hidden');
+  }
+}
+
+// ─── YouTube loader ───
+function loadYouTube(){
+  const url = document.getElementById('ytInput').value.trim();
+  const m = url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/)([^&\n?#]+)/);
+  if(!m){ toast('❌ Valid YouTube URL enter karo!','error'); return; }
+  currentVideoId = m[1];
+  document.getElementById('ytPlaceholder').style.display='none';
+  document.getElementById('ytEmbed').style.display='block';
+  document.getElementById('ytFrame').src=`https://www.youtube.com/embed/${currentVideoId}?rel=0`;
+  toast('✅ YouTube video load ho gayi!','success');
+}
+
+// ─── Main translate trigger ───
+function triggerTranslate(){
+  if(currentPage==='text'){ translateText(); return; }
+  if(currentPage==='youtube'){
+    if(!currentVideoId){ toast('⚠️ Pehle YouTube URL load karo!','error'); return; }
+    runTranslationProcess('yt');
+  } else {
+    if(!origVideoLoaded){ toast('⚠️ Pehle video upload karo!','error'); return; }
+    runTranslationProcess('video');
+  }
+}
+
+async function runTranslationProcess(mode){
+  const tgtSel = document.getElementById(mode==='yt'?'yt-tgt':'v-tgt');
+  const tgtLang = tgtSel.value;
+  const tgtName = tgtSel.options[tgtSel.selectedIndex].text.replace(/^[^\s]+\s/,'');
+
+  // Show modal
+  showModal('Translating to '+tgtName+'...');
+  const steps = [
+    {pct:20, delay:600},
+    {pct:40, delay:700},
+    {pct:70, delay:800},
+    {pct:88, delay:600},
+    {pct:100, delay:400},
+  ];
+
+  for(let i=0;i<5;i++){
+    await delay(steps[i].delay);
+    activateStep(i+1);
+    setModalProg(steps[i].pct);
+  }
+
+  // Get translation
+  let translated = getTranslation(tgtLang);
+
+  await delay(400);
+  hideModal();
+  showTranslationResult(mode, tgtLang, tgtName, translated);
+  translationDone = true;
+}
+
+function showTranslationResult(mode, tgtLang, tgtName, translated){
+  // Populate transcripts
+  const origPane = document.getElementById(mode==='yt'?'tp-orig2':'tp-orig');
+  const transPane = document.getElementById(mode==='yt'?'tp-trans2':'tp-trans');
+
+  origPane.innerHTML = SAMPLE_ORIGINAL.map(s=>`
+    <div class="tp-line">
+      <span class="tp-ts">${s.t}</span>
+      <span class="tp-txt">${s.text}</span>
+    </div>`).join('');
+
+  transPane.innerHTML = translated.map((t,i)=>`
+    <div class="tp-line">
+      <span class="tp-ts">${SAMPLE_ORIGINAL[i]?.t||''}</span>
+      <span class="tp-txt translated">${t}</span>
+    </div>`).join('');
+
+  // Stats
+  const wordCount = translated.join(' ').split(/\s+/).length;
+  document.getElementById('statWords').textContent = wordCount;
+  document.getElementById('statSubs').textContent = translated.length;
+
+  // Show live badge
+  if(mode==='yt'){
+    document.getElementById('ytTransPlaceholder').style.display='none';
+    document.getElementById('ytTransEmbed').style.display='block';
+    document.getElementById('ytTransFrame').src=`https://www.youtube.com/embed/${currentVideoId}?rel=0&mute=1`;
+    document.getElementById('ytLiveBadge').style.display='flex';
+    // Subtitle loop
+    startSubtitleLoop('yt', translated);
+  } else {
+    // Copy video to translated side
+    const transVid = document.getElementById('transVideo');
+    transVid.src = document.getElementById('origVideo').src;
+    transVid.muted = true;
+    document.getElementById('transPlaceholder').style.display='none';
+    transVid.style.display='block';
+    document.getElementById('transControls').style.display='flex';
+    document.getElementById('liveBadge').style.display='flex';
+    transVid.onloadedmetadata=()=>{
+      transVid.ontimeupdate=()=> updateVideoProgress('trans',transVid);
+    };
+    startSubtitleLoop('trans', translated);
+  }
+
+  toast('🎉 Translation complete! Preview ready hai.','success');
+}
+
+function startSubtitleLoop(mode, translated){
+  if(subtitleInterval) clearInterval(subtitleInterval);
+  let idx=0;
+  const subEl = document.getElementById(mode==='yt'?'ytTransSubText':'transSubText');
+  const origSubEl = document.getElementById(mode==='yt'?'ytOrigSubText':'origSubText');
+
+  subEl.classList.remove('hidden');
+  if(subtitlesOn) origSubEl.classList.remove('hidden');
+
+  subtitleInterval = setInterval(()=>{
+    if(subtitlesOn){
+      subEl.textContent = translated[idx%translated.length];
+      subEl.style.animation='none';
+      requestAnimationFrame(()=>subEl.style.animation='subFade .4s ease');
+      origSubEl.textContent = SAMPLE_ORIGINAL[idx%SAMPLE_ORIGINAL.length].text;
+    }
+    idx++;
+  }, 3500);
+}
+
+// ─── Text translate with Claude API ───
+async function translateText(){
+  const input = document.getElementById('txtInput').value.trim();
+  if(!input){ toast('⚠️ Text enter karo pehle!','error'); return; }
+  const tgtSel = document.getElementById('txt-tgt');
+  const tgtLang = tgtSel.options[tgtSel.selectedIndex].text.replace(/^[^\s]+\s/,'');
+  document.getElementById('txtOutput').value = '⏳ Translating...';
+  try{
+    const res = await fetch('https://api.anthropic.com/v1/messages',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({
+        model:'claude-sonnet-4-20250514',
+        max_tokens:1000,
+        messages:[{role:'user',content:`Translate the following text to ${tgtLang}. Return ONLY the translated text, no explanation.\n\n${input}`}]
+      })
+    });
+    const data = await res.json();
+    document.getElementById('txtOutput').value = data.content?.[0]?.text || 'Translation failed.';
+    const wc = document.getElementById('txtOutput').value.split(/\s+/).length;
+    document.getElementById('statWords').textContent = wc;
+    toast('✅ Translation complete!','success');
+  }catch(e){
+    document.getElementById('txtOutput').value='Error: Please try again.';
+    toast('❌ Error!','error');
+  }
+}
+
+// ─── History ───
+function loadHistoryItem(name, demo){
+  if(demo){
+    currentVideoId = 'dQw4w9WgXcQ'; // demo YT
+    switchPage('youtube');
+    document.getElementById('ytInput').value='https://www.youtube.com/watch?v=dQw4w9WgXcQ';
+    loadYouTube();
+    toast('📂 '+name+' load ho gaya','info');
+  }
+}
+
+// ─── Modal ───
+function showModal(sub){
+  document.getElementById('progressModal').classList.add('show');
+  document.getElementById('modalSub').textContent=sub;
+  document.getElementById('modalProg').style.width='0%';
+  document.getElementById('modalPct').textContent='0%';
+  for(let i=1;i<=5;i++){
+    document.getElementById('ms'+i+'i').className='step-icon step-pending';
+    document.getElementById('ms'+i+'l').className='step-label';
+    document.getElementById('ms'+i+'i').textContent=i;
+  }
+}
+
+function hideModal(){ document.getElementById('progressModal').classList.remove('show'); }
+
+function activateStep(n){
+  if(n>1){
+    document.getElementById('ms'+(n-1)+'i').className='step-icon step-done';
+    document.getElementById('ms'+(n-1)+'i').textContent='✓';
+    document.getElementById('ms'+(n-1)+'l').className='step-label done';
+  }
+  document.getElementById('ms'+n+'i').className='step-icon step-active';
+  document.getElementById('ms'+n+'l').className='step-label active';
+}
+
+function setModalProg(pct){
+  document.getElementById('modalProg').style.width=pct+'%';
+  document.getElementById('modalPct').textContent=pct+'%';
+}
+
+// ─── Transcript tabs ───
+function switchTpTab(mode,el){
+  document.querySelectorAll('#page-video .tp-tab').forEach(b=>b.classList.remove('active'));
+  el.classList.add('active');
+  const b = document.getElementById('tp-body');
+  if(mode==='both'){b.style.flexDirection='row';document.getElementById('tp-orig').style.display='';document.getElementById('tp-trans').style.display='';}
+  else if(mode==='orig'){document.getElementById('tp-orig').style.display='';document.getElementById('tp-trans').style.display='none';}
+  else{document.getElementById('tp-orig').style.display='none';document.getElementById('tp-trans').style.display='';}
+}
+
+function switchTpTab2(mode,el){
+  document.querySelectorAll('#page-youtube .tp-tab').forEach(b=>b.classList.remove('active'));
+  el.classList.add('active');
+  if(mode==='both'){document.getElementById('tp-orig2').style.display='';document.getElementById('tp-trans2').style.display='';}
+  else if(mode==='orig'){document.getElementById('tp-orig2').style.display='';document.getElementById('tp-trans2').style.display='none';}
+  else{document.getElementById('tp-orig2').style.display='none';document.getElementById('tp-trans2').style.display='';}
+}
+
+// ─── Voice selection ───
+function selectVoice(el,name){
+  document.querySelectorAll('.voice-card').forEach(c=>c.classList.remove('active'));
+  el.classList.add('active');
+  toast('🎙️ '+name+' voice selected','info');
+}
+
+// ─── Downloads ───
+function downloadSRT(){
+  if(!translationDone){toast('⚠️ Pehle translate karo!','error');return;}
+  const tgtLang = document.getElementById('v-tgt')?.value||'hi';
+  const trans = getTranslation(tgtLang);
+  let srt='';
+  SAMPLE_ORIGINAL.forEach((s,i)=>{
+    srt+=`${i+1}\n00:00:0${i*4},000 --> 00:00:0${i*4+4},000\n${trans[i]}\n\n`;
+  });
+  dl('translated_subtitles.srt',srt,'text/plain');
+  toast('✅ SRT file downloaded!','success');
+}
+
+function downloadTranscript(){
+  if(!translationDone){toast('⚠️ Pehle translate karo!','error');return;}
+  const tgtLang = document.getElementById('v-tgt')?.value||'hi';
+  const trans = getTranslation(tgtLang);
+  let txt='ORIGINAL TRANSCRIPT\n'+SAMPLE_ORIGINAL.map(s=>`[${s.t}] ${s.text}`).join('\n');
+  txt+='\n\nTRANSLATED TRANSCRIPT\n'+trans.map((t,i)=>`[${SAMPLE_ORIGINAL[i]?.t}] ${t}`).join('\n');
+  dl('transcript.txt',txt,'text/plain');
+  toast('✅ Transcript downloaded!','success');
+}
+
+function copyAllTranscript(){
+  if(!translationDone){toast('⚠️ Pehle translate karo!','error');return;}
+  const tgtLang = document.getElementById('v-tgt')?.value||'hi';
+  const trans = getTranslation(tgtLang);
+  navigator.clipboard.writeText(trans.join('\n')).then(()=>toast('📋 Copied!','success'));
+}
+
+function copyText(){
+  const t = document.getElementById('txtOutput').value;
+  if(t && t!=='Translation yahaan dikhegi...')
+    navigator.clipboard.writeText(t).then(()=>toast('📋 Text copied!','success'));
+  else toast('⚠️ Koi translation nahi hai','error');
+}
+
+function dl(name,content,mime){
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(new Blob([content],{type:mime}));
+  a.download=name; a.click();
+}
+
+// ─── Misc ───
+function delay(ms){return new Promise(r=>setTimeout(r,ms))}
+
+let toastTimer;
+function toast(msg,type='info'){
+  const el=document.getElementById('toastEl');
+  el.textContent=msg;
+  el.className='toast show '+(type);
+  clearTimeout(toastTimer);
+  toastTimer=setTimeout(()=>el.classList.remove('show'),3000);
+}
+</script>
+</body>
+</html>
